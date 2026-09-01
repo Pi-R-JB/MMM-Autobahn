@@ -57,3 +57,57 @@ Description of the config fields
 
 If ```from``` or ```to``` are not defined the module will display the whole road. (This is **not** recommended for long roads with one or two digits f.e. "A7" or "A38")
 
+
+## Route based filtering
+
+The Autobahn API no longer reliably includes junction numbers in warning titles.
+For this reason, `from` and `to` can no longer be used reliably for all roads.
+
+As an alternative, MMM-Autobahn can filter warnings by a configurable route corridor.
+
+A route is defined as a list of latitude/longitude points. The module checks the
+geometry returned by the Autobahn API and only keeps warnings that are within
+the configured corridor.
+
+Example:
+
+```javascript
+{
+    module: "MMM-Autobahn",
+    header: "Verkehrsmeldungen",
+    position: "top_right",
+
+    config: {
+        reloadInterval: 1000 * 60 * 30,
+
+        reloadSchedule: [
+            {
+                start: "05:00",
+                end: "07:00",
+                reloadInterval: 1000 * 60 * 5
+            }
+        ],
+
+        logo_right: true,
+        maxDescriptionLines: 3,
+
+        roads: [
+            {
+                road: "A7",
+                corridorKm: 4,
+
+                route: [
+                    { lat: 53.5220, long: 9.9260 },
+                    { lat: 53.4700, long: 9.9500 },
+                    { lat: 53.4094, long: 9.9931 },
+                    { lat: 53.3837, long: 10.0184 },
+                    { lat: 53.3464, long: 10.0383 }
+                ]
+            },
+
+            {
+                road: "A26"
+            }
+        ]
+    }
+}
