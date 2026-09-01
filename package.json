@@ -1,7 +1,7 @@
 {
   "name": "mmm-autobahn",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.0",
+  "description": "MagicMirror² module for German Autobahn traffic warnings with route corridor filtering and scheduled reloads.",
   "main": "MMM-Autobahn.js",
   "dependencies": {
     "native-request": "^1.1.0"
@@ -10,8 +10,11 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "http://nabria.de:30000/JockeyDoe/mmm-autobahn"
+    "url": "git+https://github.com/Pi-R-JB/MMM-Autobahn.git"
   },
-  "author": "",
+  "author": "JockeyDoe",
+  "contributors": [
+    "Pi-R-JB"
+  ],
   "license": "ISC"
 }
