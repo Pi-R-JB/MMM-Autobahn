@@ -2,7 +2,7 @@
 
 MMM-Autobahn is a MagicMirror² module for displaying current traffic warnings from the German Autobahn network.
 
-This repository is based on the original project by [JockeyDoe](https://github.com/JockeyDoe/MMM-Autobahn). The current enhancements adapt the module to changes in the Autobahn API and add route-based filtering, scheduled update intervals, and a more compact display.
+This is a maintained fork of the original project by [JockeyDoe](https://github.com/JockeyDoe/MMM-Autobahn). The current enhancements adapt the module to changes in the Autobahn API and add route-based filtering, scheduled update intervals, and a more compact display.
 
 > The module uses the official Autobahn traffic API at `https://verkehr.autobahn.de/o/autobahn/`.
 
@@ -29,10 +29,10 @@ Go to the MagicMirror modules directory:
 cd ~/MagicMirror/modules/
 ```
 
-Clone the repository and install the dependencies:
+Clone this repository and install the dependencies:
 
 ```shell
-git clone https://github.com/JockeyDoe/MMM-Autobahn.git
+git clone https://github.com/Pi-R-JB/MMM-Autobahn.git
 cd MMM-Autobahn
 npm install
 ```
