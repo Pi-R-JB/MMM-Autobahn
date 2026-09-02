@@ -4,6 +4,13 @@ All notable changes to this maintained fork of MMM-Autobahn are documented in th
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project follows Semantic Versioning.
 
+## [1.1.1] - 2026-09-02
+
+### Fixed
+
+- Retry a transiently empty Autobahn API response once after two seconds before treating a road as having no current warnings.
+- Prevent temporary empty API responses from immediately clearing otherwise valid traffic information.
+
 ## [1.1.0] - 2026-09-01
 
 ### Added

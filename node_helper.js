@@ -20,26 +20,10 @@ module.exports = NodeHelper.create({
 
         for (const roadObject of roads) {
             try {
-                const warningUrl =
-                    `https://verkehr.autobahn.de/o/autobahn/${roadObject.road}/services/warning`;
-
-                const response = await fetch(warningUrl, {
-                    signal: AbortSignal.timeout(60000)
-                });
-
-                if (!response.ok) {
-                    throw new Error(
-                        `HTTP ${response.status} for ${roadObject.road}`
+                const data =
+                    await this.fetchWarningsWithEmptyRetry(
+                        roadObject.road
                     );
-                }
-
-                const data = await response.json();
-
-                if (!data || !Array.isArray(data.warning)) {
-                    throw new Error(
-                        `Invalid API response for ${roadObject.road}`
-                    );
-                }
 
                 successfulRequests++;
 
@@ -85,6 +69,58 @@ module.exports = NodeHelper.create({
             "AUTOBAHN_DATA",
             roadData
         );
+    },
+
+    fetchWarningsWithEmptyRetry: async function (road) {
+        const warningUrl =
+            `https://verkehr.autobahn.de/o/autobahn/${road}/services/warning`;
+
+        const retryDelays = [
+            0,
+            2000
+        ];
+
+        for (let attempt = 0; attempt < retryDelays.length; attempt++) {
+
+            if (retryDelays[attempt] > 0) {
+                console.log(
+                    `[MMM-Autobahn] ${road}: empty API response, retrying`
+                );
+
+                await new Promise(resolve =>
+                    setTimeout(
+                        resolve,
+                        retryDelays[attempt]
+                    )
+                );
+            }
+
+            const response = await fetch(warningUrl, {
+                signal: AbortSignal.timeout(60000)
+            });
+
+            if (!response.ok) {
+                throw new Error(
+                    `HTTP ${response.status} for ${road}`
+                );
+            }
+
+            const data = await response.json();
+
+            if (!data || !Array.isArray(data.warning)) {
+                throw new Error(
+                    `Invalid API response for ${road}`
+                );
+            }
+
+            if (data.warning.length > 0) {
+                return data;
+            }
+
+            if (attempt === retryDelays.length - 1) {
+                return data;
+            }
+        }
     },
 
     warningMatchesFilter: function (warning, roadObject) {
